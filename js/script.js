@@ -52,8 +52,11 @@ $('form#timer').submit(function(e){
 	return false;
 });
 
-var permission = webkitNotifications.checkPermission();
-if (permission !== 0) {
-	webkitNotifications.requestPermission();
+if (typeof webkitNotifications !== 'undefined') {
+	var permission = webkitNotifications.checkPermission();
+	if (permission === 1) {
+		webkitNotifications.requestPermission(function(){
+		});
+	}
 }
 });
