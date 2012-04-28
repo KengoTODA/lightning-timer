@@ -58,8 +58,13 @@ $('form#timer').submit(function(e){
 if (typeof webkitNotifications !== 'undefined') {
 	var permission = webkitNotifications.checkPermission();
 	if (permission === 1) {
+		$('#group-permit').show();
+	}
+	$('#input-permit').click(function(e){
+		e.preventDefault();
 		webkitNotifications.requestPermission(function(){
 		});
-	}
+		return false;
+	});
 }
 });
