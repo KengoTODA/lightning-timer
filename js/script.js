@@ -63,6 +63,10 @@ if (typeof webkitNotifications !== 'undefined') {
 	$('#input-permit').click(function(e){
 		e.preventDefault();
 		webkitNotifications.requestPermission(function(){
+			var permission = webkitNotifications.checkPermission();
+			if (permission === 0) {
+				$('#group-permit').fadeOut('normal');
+			}
 		});
 		return false;
 	});
