@@ -28,12 +28,32 @@ Timer.prototype.stop = function(){
 };
 
 function notice(message) {
-	alert(message);
+	if (typeof webkitNotifications === 'undefined' || webkitNotifications.checkPermission() !== 0) {
+		alert(message);
+		return;
+	}
+
+	var notification = webkitNotifications.createNotification(
+		'', 'Lightning talk timer', message
+	);
+	notification.ondisplay = function(){
+		setTimeout(function(){
+			notification.cancel();
+		}, 3000);
+	};
+	notification.show();
 }
 
+$(function(){
 $('form#timer').submit(function(e){
 	var limit = $('input#input-limit').val(),
 	    timer = new Timer(limit);
 	e.preventDefault();
 	return false;
+});
+
+var permission = webkitNotifications.checkPermission();
+if (permission !== 0) {
+	webkitNotifications.requestPermission();
+}
 });
