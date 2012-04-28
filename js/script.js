@@ -5,6 +5,7 @@ var Timer = function(limitMinute) {
 	this.start = Date.now();
 	this.id = setInterval(function(){that.tick();}, 1000);
 	this.alertTime = [];
+	this.progress = $('#progress-bar');
 	for (var i = 1; i < limitMinute; ++i) {
 		this.alertTime.push({
 			'left': (limitMinute - i),
@@ -13,7 +14,8 @@ var Timer = function(limitMinute) {
 	}
 };
 Timer.prototype.tick = function(){
-	var elapsedMillis = Date.now() - this.start;
+	var elapsedMillis = Date.now() - this.start,
+	    progress = Math.min(elapsedMillis * 100 / this.limit, 100);
 	if (this.limit <= elapsedMillis) {
 		// time over
 		this.stop();
@@ -22,6 +24,7 @@ Timer.prototype.tick = function(){
 		notice(this.alertTime[0]['left'] + ' minutes left');
 		this.alertTime.shift();
 	}
+	this.progress.width(progress + '%');
 };
 Timer.prototype.stop = function(){
 	clearInterval(this.id);
