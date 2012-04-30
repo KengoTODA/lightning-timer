@@ -4,7 +4,7 @@ $('form#timer').submit(function(e){
 	// TODO validate
 
 	if (typeof webkitNotifications !== 'undefined' && !!webkitNotifications.createHTMLNotification) {
-		webkitNotifications.createHTMLNotification('notification.html#' + limit);
+		webkitNotifications.createHTMLNotification('http://skypencil.jp/lightning-timer/notification.html#' + limit);
 	} else {
 		alert('please use Google Chrome');
 	}
